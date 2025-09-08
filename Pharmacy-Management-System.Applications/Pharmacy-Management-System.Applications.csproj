@@ -2,13 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
-    <RootNamespace>Pharmacy_Management_System.Application</RootNamespace>
+    <RootNamespace>Pharmacy_Management_System.Applications</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Pharmacy-Management-System.Domain\Pharmacy-Management-System.Domains.csproj" />
+    <ProjectReference Include="..\Pharmacy-Management-System.Domains\Pharmacy-Management-System.Domains.csproj" />
   </ItemGroup>
 
   <ItemGroup>
