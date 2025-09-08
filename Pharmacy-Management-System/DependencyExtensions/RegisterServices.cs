@@ -2,7 +2,7 @@
 {
     public static class RegisterServices
     {
-        public static void AddServices(this IServiceCollection services)
+        public static void AddServices(this IServiceCollection services, IConfiguration configuration)
         {
             
         }

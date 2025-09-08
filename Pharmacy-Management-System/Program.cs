@@ -1,24 +1,72 @@
+using Microsoft.AspNetCore.ResponseCompression;
+using Pharmacy_Management_System.Data.Setups;
 using Pharmacy_Management_System.DependencyExtensions;
+using Pharmacy_Management_System.Mappers;
+using Pharmacy_Management_System.Middleware;
+using Scalar.AspNetCore;
+using System.IO.Compression;
 
 var builder = WebApplication.CreateBuilder(args);
 
+#region Add services to the container
 
+builder.Services.AddEndpointsApiExplorer();
+builder.AddSwagger();
 builder.Services.AddControllers();
-builder.Services.AddOpenApi();
-builder.Services.AddServices();
+builder.Services.AddHttpClient();
+builder.Services.AddServices(builder.Configuration);
 builder.Services.AddRepositories();
+builder.Services.AddAuthPolicies();
+builder.AddJWTAuthentication();
+builder.Services.AddAuthorization();
+builder.Services.AddCorsPolicy(builder.Configuration);
+
+builder.Services.AddResponseCompression(options =>
+{
+    options.Providers.Add<GzipCompressionProvider>();
+    options.EnableForHttps = true;
+});
+builder.Services.Configure<GzipCompressionProviderOptions>(options =>
+{
+    options.Level = CompressionLevel.Fastest;
+});
+
+#endregion
+
+#region Dependency Injection For Entity Framework Core Implementation (Infustructure)
+
+string? connectionString = builder.Configuration.GetValue<string>("DbSettings:DbConnectionString");
+string? readDbConnection = builder.Configuration.GetValue<string>("DbSettings:ReadDbConnection");
+builder.Services.AddPersistence(connectionString, readDbConnection);
+
+#endregion
+
+#region AutoMapper Configuration
+
+builder.Services.AddAutoMapper(
+    typeof(DefaultProfile),
+    typeof(RequestMapper),
+    typeof(ResponseMapper));
+
+#endregion
 
 var app = builder.Build();
 
+// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-
+app.UseResponseCompression();
+app.UseCors("CorsPolicy");
+app.UseStaticFiles();
+app.UseRouting();
+//app.UseHttpsRedirection();
+app.UseAuthentication();
 app.UseAuthorization();
-
-app.MapControllers();
+//app.UseCustomMiddleware();
+app.MapControllers(); 
 
 app.Run();

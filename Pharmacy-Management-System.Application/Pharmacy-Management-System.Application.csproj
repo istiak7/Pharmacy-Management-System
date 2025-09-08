@@ -2,21 +2,31 @@
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
-    <RootNamespace>Pharmacy_Management_System.Application</RootNamespace>
+    <RootNamespace>Pharmacy_Management_System.Applications</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Pharmacy-Management-System.Domain\Pharmacy-Management-System.Domain.csproj" />
+    <ProjectReference Include="..\Pharmacy-Management-System.Domain\Pharmacy-Management-System.Domains.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Dtos\Responses\" />
     <Folder Include="Dtos\Requests\" />
+    <Folder Include="Dtos\Responses\" />
     <Folder Include="Enums\" />
-    <Folder Include="Services\" />
     <Folder Include="Repositories\" />
+    <Folder Include="Services\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="14.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.8" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
   </ItemGroup>
 
 </Project>
