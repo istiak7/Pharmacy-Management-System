@@ -1,6 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Pharmacy_Management_System.Domain.Entities;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Pharmacy_Management_System.Domains.Entities.MenuItems
+namespace Pharmacy_Management_System.Domain.Entities.MenuItems
 {
     public class MenuItem : BaseEntity
     {

@@ -3,7 +3,6 @@ using Pharmacy_Management_System.Data.Setups;
 using Pharmacy_Management_System.DependencyExtensions;
 using Pharmacy_Management_System.Mappers;
 using Pharmacy_Management_System.Middleware;
-using Scalar.AspNetCore;
 using System.IO.Compression;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,7 +11,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.AddSwagger();
-builder.Services.AddControllers();
 builder.Services.AddHttpClient();
 builder.Services.AddServices(builder.Configuration);
 builder.Services.AddRepositories();
@@ -20,6 +18,7 @@ builder.Services.AddAuthPolicies();
 builder.AddJWTAuthentication();
 builder.Services.AddAuthorization();
 builder.Services.AddCorsPolicy(builder.Configuration);
+builder.Services.AddControllers();
 
 builder.Services.AddResponseCompression(options =>
 {
@@ -52,7 +51,8 @@ builder.Services.AddAutoMapper(
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+#region Configure the HTTP request pipeline.
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -63,10 +63,11 @@ app.UseResponseCompression();
 app.UseCors("CorsPolicy");
 app.UseStaticFiles();
 app.UseRouting();
-//app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
-//app.UseCustomMiddleware();
-app.MapControllers(); 
+app.UseCustomMiddleware();
+app.MapControllers();
 
 app.Run();
+
+#endregion

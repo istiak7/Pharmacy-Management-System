@@ -4,7 +4,6 @@
     {
         public static void AddServices(this IServiceCollection services, IConfiguration configuration)
         {
-            
         }
     }
 }

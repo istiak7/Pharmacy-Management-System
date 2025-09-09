@@ -1,4 +1,4 @@
-﻿namespace Pharmacy_Management_System.Applications.AppSettings
+﻿namespace Pharmacy_Management_System.Application.AppSettings
 {
     public class JWTSettings
     {

@@ -1,9 +1,8 @@
-﻿using Pharmacy_Management_System.Domains.Entities.Roles;
-using Pharmacy_Management_System.Domains.Entities;
-using Pharmacy_Management_System.Domains.Entities.MenuItems;
+﻿using Pharmacy_Management_System.Domain.Entities.MenuItems;
+using Pharmacy_Management_System.Domain.Entities.Roles;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Pharmacy_Management_System.Domains.Entities.Permissions
+namespace Pharmacy_Management_System.Domain.Entities.Permissions
 {
     public class Permission : BaseEntity
     {

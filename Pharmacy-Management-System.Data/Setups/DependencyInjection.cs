@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Pharmacy_Management_System.Data.DbContexts;
 using Pharmacy_Management_System.Domain.Interfaces.Transactions;
-using Pharmacy_Management_System.Domains.Contexts;
+using Pharmacy_Management_System.Domain.Contexts;
 
 namespace Pharmacy_Management_System.Data.Setups
 {

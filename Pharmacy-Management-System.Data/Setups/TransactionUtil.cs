@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
+using Pharmacy_Management_System.Domain.Contexts;
 using Pharmacy_Management_System.Domain.Interfaces.Transactions;
-using Pharmacy_Management_System.Domains.Contexts;
 
 namespace Pharmacy_Management_System.Data.Setups
 {

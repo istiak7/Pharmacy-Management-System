@@ -1,4 +1,4 @@
-﻿namespace Pharmacy_Management_System.Domains.Interfaces.Transactions
+﻿namespace Pharmacy_Management_System.Domain.Interfaces.Transactions
 {
     public interface ITransactionUtil : IDisposable
     {

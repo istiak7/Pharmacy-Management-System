@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Pharmacy_Management_System.Domains.Contexts;
+using Pharmacy_Management_System.Domain.Contexts;
 
 namespace Pharmacy_Management_System.Data.DbContexts
 {

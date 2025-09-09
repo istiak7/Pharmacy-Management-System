@@ -1,4 +1,4 @@
-﻿namespace Pharmacy_Management_System.Domains.Contexts
+﻿namespace Pharmacy_Management_System.Domain.Contexts
 {
     public interface IReadDbContext : IApplicationDbContext
     {

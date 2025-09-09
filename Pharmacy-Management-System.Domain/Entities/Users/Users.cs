@@ -1,7 +1,7 @@
-﻿using Pharmacy_Management_System.Domains.Entities;
+﻿using Pharmacy_Management_System.Domain.Entities;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Pharmacy_Management_System.Domains.Entities.Users
+namespace Pharmacy_Management_System.Domain.Entities.Users
 {
     public class User : BaseEntity
     {

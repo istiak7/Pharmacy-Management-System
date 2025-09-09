@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Infrastructure;
 
-namespace Pharmacy_Management_System.Domains.Contexts
+namespace Pharmacy_Management_System.Domain.Contexts
 {
     public interface IApplicationDbContext : IInfrastructure<IServiceProvider>
     {
