@@ -9,7 +9,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 #region Add services to the container
 
-builder.Services.AddEndpointsApiExplorer();
 builder.AddSwagger();
 builder.Services.AddHttpClient();
 builder.Services.AddServices(builder.Configuration);

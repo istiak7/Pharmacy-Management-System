@@ -8,6 +8,7 @@ namespace Pharmacy_Management_System.DependencyExtensions
         {
             builder.Services.AddSwaggerGen(opt =>
             {
+                
                 opt.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Title = "Pharmacy Management System API",
