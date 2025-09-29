@@ -6,7 +6,7 @@ namespace Pharmacy_Management_System.Service.Validators
     public static class ValidationExtensions
     {
         public static async Task<ValidatorResult> ValidateModel<T>(
-            this T model,
+            this T model, // this is Method Chaining concept
             IValidator<T> validator,
             CancellationToken cancellationToken = default)
         {
