@@ -13,7 +13,7 @@ namespace Pharmacy_Management_System.Domain.Entities.Users
     {
         [Required]
         [Column("username"), MaxLength(128)]
-        public required string UserName { get; set; }
+        public required string Username { get; set; }
 
         [Required]
         [EmailAddress]

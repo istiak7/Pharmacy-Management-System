@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Pharmacy_Management_System.Domain.Entities.Users;
+using Pharmacy_Management_System.Domain.Interfaces.Base;
 
 namespace Pharmacy_Management_System.Application.Repositories.Users
 {
-    public interface IUserRepository
+    public interface IUserRepository : IBaseRepository<User>
     {
         #region GET
 
+        Task<User?> GetValidUserByRefreshTokenAsync(int userId);
+        Task<User?> GetByUsernameOrEmailAsync(string identifier);
 
         #endregion
 
