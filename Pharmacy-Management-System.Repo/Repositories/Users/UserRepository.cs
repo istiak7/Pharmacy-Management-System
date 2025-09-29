@@ -19,7 +19,7 @@ namespace Pharmacy_Management_System.Repo.Repositories.Users
 
         public async Task<User?> GetValidUserByRefreshTokenAsync(int userId)
         {
-            return await _dbContext.Users
+            return await _dbContextWrite.Users
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x =>
                     x.Id == userId &&
@@ -29,9 +29,10 @@ namespace Pharmacy_Management_System.Repo.Repositories.Users
 
         public async Task<User?> GetByUsernameOrEmailAsync(string identifier)
         {
-            return await _dbContext.Users
+            var user = await _dbContextWrite.Users
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Username == identifier || x.Email == identifier);
+            return user;
         }
 
         #endregion
