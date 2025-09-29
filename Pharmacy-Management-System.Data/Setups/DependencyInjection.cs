@@ -15,11 +15,11 @@ namespace Pharmacy_Management_System.Data.Setups
         {
             #region Null Checks
 
-            //if (string.IsNullOrWhiteSpace(connectionString))
-            //    throw new ArgumentNullException(nameof(connectionString));
+            if (string.IsNullOrWhiteSpace(connectionString))
+                throw new ArgumentNullException(nameof(connectionString));
 
-            //if (string.IsNullOrWhiteSpace(readConnectionString))
-            //    throw new ArgumentNullException(nameof(readConnectionString));
+            if (string.IsNullOrWhiteSpace(readConnectionString))
+                throw new ArgumentNullException(nameof(readConnectionString));
 
             #endregion
 
@@ -47,6 +47,8 @@ namespace Pharmacy_Management_System.Data.Setups
 #endif
             }, ServiceLifetime.Scoped);
 
+            services.AddScoped<IReadDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
+            
             #endregion
 
             #region Register Write DbContext
@@ -62,10 +64,10 @@ namespace Pharmacy_Management_System.Data.Setups
 #endif
             }, ServiceLifetime.Scoped);
 
-            #endregion
-
             services.AddScoped<IApplicationDbContext>
                 (provider => provider.GetRequiredService<ApplicationDbContextWrite>());
+
+            #endregion
 
             services.AddScoped<ITransactionUtil, TransactionUtil>();
             

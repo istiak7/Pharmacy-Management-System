@@ -26,6 +26,5 @@ namespace Pharmacy_Management_System.Data.DbContexts
         public DbSet<User> Users { get; set; }
 
         #endregion
-
     }
 }
