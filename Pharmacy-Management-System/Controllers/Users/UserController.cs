@@ -46,6 +46,7 @@ namespace Pharmacy_Management_System.Controllers.Users
 
         #region REGISTRATION
 
+        [AllowAnonymous]
         [HttpPost("registration")]
         public async Task<IActionResult> Registration(
             [FromBody] UserRequest request,
