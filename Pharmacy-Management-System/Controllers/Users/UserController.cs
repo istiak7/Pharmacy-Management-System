@@ -16,6 +16,7 @@ namespace Pharmacy_Management_System.Controllers.Users
     {
         #region GET
 
+        [AllowAnonymous]
         [HttpGet("refresh-token")]
         public async Task<IActionResult> RefreshToken(
             [FromQuery] int userId,
@@ -29,6 +30,7 @@ namespace Pharmacy_Management_System.Controllers.Users
 
         #region LOGIN
 
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> Login(
             [FromBody] LoginRequest request,
