@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.ResponseCompression;
+using Pharmacy_Management_System.Application;
 using Pharmacy_Management_System.Data.Setups;
 using Pharmacy_Management_System.DependencyExtensions;
 using Pharmacy_Management_System.Mappers;
 using Pharmacy_Management_System.Middleware;
 using System.IO.Compression;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,6 +40,7 @@ string? readDbConnection = builder.Configuration.GetValue<string>("DbSettings:Re
 builder.Services.AddPersistence(connectionString, readDbConnection);
 
 #endregion
+builder.Services.AddApplication();
 
 #region AutoMapper Configuration
 

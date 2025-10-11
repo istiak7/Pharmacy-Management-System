@@ -13,4 +13,8 @@
     <ProjectReference Include="..\Pharmacy-Management-System.Domain\Pharmacy-Management-System.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\Common\" />
+  </ItemGroup>
+
 </Project>
