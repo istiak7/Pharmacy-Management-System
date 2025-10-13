@@ -36,8 +36,7 @@ builder.Services.Configure<GzipCompressionProviderOptions>(options =>
 #region Dependency Injection For Entity Framework Core Implementation (Infustructure)
 
 string? connectionString = builder.Configuration.GetValue<string>("DbSettings:DbConnectionString");
-string? readDbConnection = builder.Configuration.GetValue<string>("DbSettings:ReadDbConnection");
-builder.Services.AddPersistence(connectionString, readDbConnection);
+builder.Services.AddPersistence(connectionString);
 
 #endregion
 builder.Services.AddApplication();

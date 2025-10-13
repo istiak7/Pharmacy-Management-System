@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Pharmacy_Management_System.Data.DbContexts.ModelBuilders;
 using Pharmacy_Management_System.Domain.Contexts;
+using Pharmacy_Management_System.Domain.Entities.Roles;
 using Pharmacy_Management_System.Domain.Entities.Users;
 
 namespace Pharmacy_Management_System.Data.DbContexts
@@ -22,11 +23,13 @@ namespace Pharmacy_Management_System.Data.DbContexts
         #region DbSets
 
         public DbSet<User> Users { get; set; }
-
+        public DbSet<Role> Roles { get; set; }
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.HasDefaultSchema("public");
+
             modelBuilder.ConfigureAllModelBuilders();
 
             base.OnModelCreating(modelBuilder);

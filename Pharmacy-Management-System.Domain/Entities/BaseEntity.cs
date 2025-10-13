@@ -10,10 +10,10 @@ namespace Pharmacy_Management_System.Domain.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Required]
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedAt { get; set; } 
         [Required]
         public int CreatedBy { get; set; }
-        public DateTime? UpdatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; } 
         public int? UpdatedBy { get; set; }
         [Required]
         public bool IsActive { get; set; } = true;

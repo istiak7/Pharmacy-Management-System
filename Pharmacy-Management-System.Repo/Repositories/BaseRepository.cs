@@ -9,10 +9,10 @@ namespace Pharmacy_Management_System.Repo.Repositories
         #region CTOR
 
         private readonly ApplicationDbContextWrite _dbContextWrite;
-        protected readonly ApplicationDbContext _dbContext;
+        protected readonly ApplicationDbContextWrite _dbContext;
 
         public BaseRepository(
-            ApplicationDbContext dbContext,
+            ApplicationDbContextWrite dbContext,
             ApplicationDbContextWrite dbContextWrite
             
         )

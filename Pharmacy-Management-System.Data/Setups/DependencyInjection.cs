@@ -10,16 +10,12 @@ namespace Pharmacy_Management_System.Data.Setups
     public static class DependencyInjection
     {
         public static IServiceCollection AddPersistence(this IServiceCollection services,
-            string? connectionString,
-            string? readConnectionString)
+            string? connectionString)
         {
             #region Null Checks
 
             if (string.IsNullOrWhiteSpace(connectionString))
                 throw new ArgumentNullException(nameof(connectionString));
-
-            if (string.IsNullOrWhiteSpace(readConnectionString))
-                throw new ArgumentNullException(nameof(readConnectionString));
 
             #endregion
 
@@ -27,31 +23,10 @@ namespace Pharmacy_Management_System.Data.Setups
 
             services.AddScoped<NpgsqlConnection>(_ => new NpgsqlConnection(connectionString));
 
-            services.AddKeyedScoped<NpgsqlConnection>(
-                "ReadConnection",
-                (_, _) => new NpgsqlConnection(readConnectionString)
-            );
-
             #endregion
 
-            #region Register Read DbContext
 
-            services.AddDbContext<ApplicationDbContext>((provider, options) =>
-            {
-                options.UseNpgsql(readConnectionString, npgsqlOptions =>
-                    npgsqlOptions.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName));
-
-#if DEBUG
-                options.EnableSensitiveDataLogging();
-                options.EnableDetailedErrors();
-#endif
-            }, ServiceLifetime.Scoped);
-
-            services.AddScoped<IReadDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
-            
-            #endregion
-
-            #region Register Write DbContext
+            #region Register DbContext
 
             services.AddDbContext<ApplicationDbContextWrite>((provider, options) =>
             {

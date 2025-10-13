@@ -6,9 +6,8 @@ using Pharmacy_Management_System.Domain.Entities.Users;
 namespace Pharmacy_Management_System.Repo.Repositories.Users
 {
     public class UserRepository(
-            ApplicationDbContext _dbContext,
-            ApplicationDbContextWrite _dbContextWrite
-        ) : BaseRepository<User>(_dbContext, _dbContextWrite), IUserRepository
+            ApplicationDbContextWrite _dbContext
+        ) : BaseRepository<User>(_dbContext, _dbContext), IUserRepository
     {
         #region PRIVATE
 
@@ -19,7 +18,7 @@ namespace Pharmacy_Management_System.Repo.Repositories.Users
 
         public async Task<User?> GetValidUserByRefreshTokenAsync(int userId)
         {
-            return await _dbContextWrite.Users
+            return await _dbContext.Users
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x =>
                     x.Id == userId &&
@@ -29,7 +28,7 @@ namespace Pharmacy_Management_System.Repo.Repositories.Users
 
         public async Task<User?> GetByUsernameOrEmailAsync(string identifier)
         {
-            var user = await _dbContextWrite.Users
+            var user = await _dbContext.Users
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Username == identifier || x.Email == identifier);
             return user;

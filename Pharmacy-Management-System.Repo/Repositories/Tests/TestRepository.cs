@@ -12,8 +12,8 @@ namespace Pharmacy_Management_System.Repo.Repositories.Tests
 {
     public sealed class TestRepository : GenericRepository<Test>, ITestRepository
     {
-        private readonly ApplicationDbContext _dbcontext;
-        public TestRepository(ApplicationDbContext dbcontext) : base(dbcontext)
+        private readonly ApplicationDbContextWrite _dbcontext;
+        public TestRepository(ApplicationDbContextWrite dbcontext) : base(dbcontext)
         {
             _dbcontext = dbcontext;
         }
