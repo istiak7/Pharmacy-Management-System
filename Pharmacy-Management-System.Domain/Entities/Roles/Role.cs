@@ -8,8 +8,18 @@ namespace Pharmacy_Management_System.Domain.Entities.Roles
 {
     public sealed class Role : BaseEntity
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public string Name { get; private set; }
+        public string Description { get; private set; }
+
+        private Role(string name, string description)
+        {
+            Name = name;
+            Description = description;
+        }
+        public static Role Create(string name, string description)
+        {
+            return new Role(name, description);
+        }
 
     }
 }

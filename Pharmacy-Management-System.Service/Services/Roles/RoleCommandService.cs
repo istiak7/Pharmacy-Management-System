@@ -29,12 +29,11 @@ namespace Pharmacy_Management_System.Service.Services.Roles
             {
                 return Utility.GetAlreadyExistMsg("Role Name Already Exist");
             }
-            var RoleDetails = new Role
-            {
-                Name = model.Name,
-                Description = model.Description
-            };
+            
+            var RoleDetails = Role.Create(model.Name, model.Description);
+
             await _roleCommandRepository.InsertAsync(RoleDetails, saveChnages);
+
             return Utility.GetSuccessMsg(CommonMessages.SavedSuccessfully);
         }
 
