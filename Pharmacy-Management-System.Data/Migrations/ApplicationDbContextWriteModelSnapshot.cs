@@ -41,8 +41,8 @@ namespace Pharmacy_Management_System.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
+                    b.Property<int>("IsActive")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -79,8 +79,8 @@ namespace Pharmacy_Management_System.Data.Migrations
                         .HasColumnType("character varying(128)")
                         .HasColumnName("email");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
+                    b.Property<int>("IsActive")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Password")
                         .IsRequired()

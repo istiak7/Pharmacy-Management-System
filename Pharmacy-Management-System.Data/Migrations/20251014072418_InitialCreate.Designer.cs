@@ -12,7 +12,7 @@ using Pharmacy_Management_System.Data.DbContexts;
 namespace Pharmacy_Management_System.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContextWrite))]
-    [Migration("20251013174634_InitialCreate")]
+    [Migration("20251014072418_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -44,8 +44,8 @@ namespace Pharmacy_Management_System.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
+                    b.Property<int>("IsActive")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -82,8 +82,8 @@ namespace Pharmacy_Management_System.Data.Migrations
                         .HasColumnType("character varying(128)")
                         .HasColumnName("email");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
+                    b.Property<int>("IsActive")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Password")
                         .IsRequired()

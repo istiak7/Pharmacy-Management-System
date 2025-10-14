@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <Folder Include="Enums\" />
+    <Folder Include="Features\Roles\Queries\Dtos\" />
     <Folder Include="Features\Test\Command\" />
     <Folder Include="ServiceInterfaces\Common\" />
   </ItemGroup>
@@ -23,6 +24,8 @@
     <PackageReference Include="FluentValidation" Version="12.0.0" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.0.0" />
     <PackageReference Include="MediatR" Version="13.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="3.1.32" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.8">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

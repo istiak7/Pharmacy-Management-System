@@ -16,6 +16,6 @@ namespace Pharmacy_Management_System.Domain.Entities
         public DateTime? UpdatedAt { get; set; } 
         public int? UpdatedBy { get; set; }
         [Required]
-        public bool IsActive { get; set; } = true;
+        public int IsActive { get; set; } = 1;
     }
 }
