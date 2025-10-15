@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Pharmacy_Management_System.Domain.Common;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pharmacy_Management_System.Domain.Entities
@@ -17,5 +18,29 @@ namespace Pharmacy_Management_System.Domain.Entities
         public int? UpdatedBy { get; set; }
         [Required]
         public int IsActive { get; set; } = 1;
+
+        public void Active()
+        {
+            IsActive = (int)EntityConstant.StatusId.Active;
+        }
+
+        public void InActive()
+        {
+            IsActive = (int)EntityConstant.StatusId.InActive;
+        }
+
+        public void Delete()
+        {
+            IsActive = (int)EntityConstant.StatusId.Delete;
+        }
+        public void SetDefaultValueDuringInsert(DateTime createdAt)
+        {
+            CreatedAt = createdAt;
+            IsActive = (int)EntityConstant.StatusId.Active;
+        }
+        public void SetDefaultValueDuringUpdate(DateTime updatedAt)
+        {
+            UpdatedAt = updatedAt;
+        }
     }
 }

@@ -22,7 +22,7 @@ namespace Pharmacy_Management_System.Service.Services.Roles
         {
             _roleCommandRepository = roleCommandRepository;
         }
-
+        #region Command
         public async Task<Result> CreateRole(RoleCreateDto model, bool saveChnages = true)
         {
             if (await CheckIsNameExist(model.Name) is not null) 
@@ -36,6 +36,27 @@ namespace Pharmacy_Management_System.Service.Services.Roles
 
             return Utility.GetSuccessMsg(CommonMessages.SavedSuccessfully);
         }
+
+        public async Task<Result> UpdateRole(RoleUpdateDto model, bool saveChnages = true)
+        {
+            var existingData = await _roleCommandRepository.FindAsync(x => x.Id == model.Id && x.IsActive != (int)StatusId.Delete);
+
+            if (existingData is null)
+            {
+                return Utility.GetNoDataFoundMsg(CommonMessages.NoDataFound);
+            }
+            if(await  CheckIsNameExist(model.Name) is not null)
+            {
+                return Utility.GetAlreadyExistMsg(CommonMessages.DuplicateName);
+            }
+            existingData.Update(model.Name, model.Description);
+
+            await _roleCommandRepository.UpdateAsync(existingData, saveChnages);
+
+            return Utility.GetSuccessMsg(CommonMessages.UpdatedSuccessfully);
+        }
+
+        #endregion
 
         #region Private Method
 

@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Pharmacy_Management_System.Application.Common.Utilities;
 using Pharmacy_Management_System.Data.DbContexts.ModelBuilders;
 using Pharmacy_Management_System.Domain.Contexts;
+using Pharmacy_Management_System.Domain.Entities;
 using Pharmacy_Management_System.Domain.Entities.Roles;
 using Pharmacy_Management_System.Domain.Entities.Users;
 
@@ -34,5 +36,29 @@ namespace Pharmacy_Management_System.Data.DbContexts
 
             base.OnModelCreating(modelBuilder);
         }
+
+        #region SaveChanges
+
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new())
+        {
+            int result = 0;
+            foreach (var entry in ChangeTracker.Entries<BaseEntity>().ToList())
+            {
+                switch (entry.State)
+                {
+                    case EntityState.Added:
+                        entry.Entity.SetDefaultValueDuringInsert(CommonMethods.GetBDCurrentTime());
+                        break;
+
+                    case EntityState.Modified:
+                        entry.Entity.SetDefaultValueDuringUpdate(CommonMethods.GetBDCurrentTime());
+                        break;
+                }
+            }
+            result = await base.SaveChangesAsync(cancellationToken);
+            return result;
+        }
+
+        #endregion
     }
 }

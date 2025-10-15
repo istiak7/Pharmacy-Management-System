@@ -27,6 +27,22 @@ namespace Pharmacy_Management_System.Controllers.Role
 
         }
 
+        [HttpPut("Update")]
+        public async Task<IActionResult> UpdateRole([FromBody]  RoleUpdateDto model, CancellationToken cancellationToken)
+        {
+            Result result;
+            var validationResult = new RoleUpdateDtoValidator().Validate(model);
+            if (!validationResult.IsValid)
+            {
+                result = Utility.GetValidationFailedMsg(FluentValidationHelper.GetErrorMessage(validationResult.Errors));
+            }
+            else
+            {
+                var Command = new RoleUpdateCommand(model);
+                result = await Mediator.Send(Command, cancellationToken);
+            }
+            return StatusCode(result.StatusCode, result);
+        }
         #endregion
     }
 }

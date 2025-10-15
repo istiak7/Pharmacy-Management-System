@@ -10,5 +10,6 @@ namespace Pharmacy_Management_System.Application.ServiceInterfaces.Roles
     public interface IRoleCommandService
     {
         public Task<Result> CreateRole(RoleCreateDto model, bool saveChnages = true);
+        public Task<Result> UpdateRole(RoleUpdateDto model, bool saveChanges = true);
     }
 }
