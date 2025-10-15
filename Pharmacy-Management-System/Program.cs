@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.ResponseCompression;
 using Pharmacy_Management_System.Application;
+using Pharmacy_Management_System.Application.Common.Utilities;
 using Pharmacy_Management_System.Data.Setups;
 using Pharmacy_Management_System.DependencyExtensions;
 using Pharmacy_Management_System.Mappers;
@@ -30,6 +31,11 @@ builder.Services.Configure<GzipCompressionProviderOptions>(options =>
 {
     options.Level = CompressionLevel.Fastest;
 });
+
+#region Initialize CommonMethods
+
+CommonMethods.Initialize(builder.Configuration);
+#endregion
 
 #endregion
 

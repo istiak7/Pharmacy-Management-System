@@ -21,5 +21,10 @@ namespace Pharmacy_Management_System.Domain.Entities.Roles
             return new Role(name, description);
         }
 
+        public void Update(string name, string description)
+        {
+            Name = name;
+            Description = description;
+        }
     }
 }

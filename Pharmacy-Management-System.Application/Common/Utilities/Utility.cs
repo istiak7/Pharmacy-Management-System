@@ -106,7 +106,7 @@ namespace Pharmacy_Management_System.Application.Common.Utilities
             };
         }
 
-        public static Result GetNoDataFoundMsg(string msg = "No data found!")
+        public static Result GetNoDataFoundMsg(string msg = CommonMessages.NoDataFound)
         {
             return new Result
             {
