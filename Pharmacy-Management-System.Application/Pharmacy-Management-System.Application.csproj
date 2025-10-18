@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <Folder Include="Enums\" />
+    <Folder Include="Features\Permissions\Query\" />
     <Folder Include="Features\Roles\Queries\Dtos\" />
     <Folder Include="Features\Test\Command\" />
     <Folder Include="ServiceInterfaces\Common\" />

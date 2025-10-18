@@ -3,6 +3,7 @@ using Pharmacy_Management_System.Application.Common.Utilities;
 using Pharmacy_Management_System.Data.DbContexts.ModelBuilders;
 using Pharmacy_Management_System.Domain.Contexts;
 using Pharmacy_Management_System.Domain.Entities;
+using Pharmacy_Management_System.Domain.Entities.Permissions;
 using Pharmacy_Management_System.Domain.Entities.Roles;
 using Pharmacy_Management_System.Domain.Entities.Users;
 
@@ -26,6 +27,7 @@ namespace Pharmacy_Management_System.Data.DbContexts
 
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<Permission> Permissions { get; set; }
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

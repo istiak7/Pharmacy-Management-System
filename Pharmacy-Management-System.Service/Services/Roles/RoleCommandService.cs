@@ -12,12 +12,14 @@ using System.Text;
 using System.Threading.Tasks;
 using static Pharmacy_Management_System.Domain.Common.EntityConstant;
 using Utility = Pharmacy_Management_System.Application.Common.Utilities.Utility;
+using Pharmacy_Management_System.Application.RepositoryInterfaces.Permissions;
 
 namespace Pharmacy_Management_System.Service.Services.Roles
 {
     public class RoleCommandService : IRoleCommandService
     {
         private readonly IRoleCommandRepository _roleCommandRepository;
+        private readonly IPermissionCommandRepository _permissionCommandRepository;
         public RoleCommandService(IRoleCommandRepository roleCommandRepository) 
         {
             _roleCommandRepository = roleCommandRepository;
@@ -31,6 +33,16 @@ namespace Pharmacy_Management_System.Service.Services.Roles
             }
             
             var RoleDetails = Role.Create(model.Name, model.Description);
+
+            if (model.PermissionIds.Count > 0) 
+            {
+                var permissons = await _permissionCommandRepository.FindAllAsync(p =>  model.PermissionIds.Contains(p.Id));
+
+                foreach (var permissionId in permissons)
+                {
+                    RoleDetails.Permissions.Add(permissionId);
+                }
+            }
 
             await _roleCommandRepository.InsertAsync(RoleDetails, saveChnages);
 

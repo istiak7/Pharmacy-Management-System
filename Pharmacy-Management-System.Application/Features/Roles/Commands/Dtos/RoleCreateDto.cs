@@ -10,5 +10,6 @@ namespace Pharmacy_Management_System.Application.Features.Roles.Commands.Dtos
     {
         public string Name {  get; set; }
         public string Description { get; set; }
+        public List<int>? PermissionIds { get; set; }
     }
 }

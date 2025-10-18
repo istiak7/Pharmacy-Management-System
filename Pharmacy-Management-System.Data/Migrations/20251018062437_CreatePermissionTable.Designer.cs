@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Pharmacy_Management_System.Data.DbContexts;
@@ -11,9 +12,11 @@ using Pharmacy_Management_System.Data.DbContexts;
 namespace Pharmacy_Management_System.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContextWrite))]
-    partial class ApplicationDbContextWriteModelSnapshot : ModelSnapshot
+    [Migration("20251018062437_CreatePermissionTable")]
+    partial class CreatePermissionTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -71,7 +74,7 @@ namespace Pharmacy_Management_System.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Permissions", "public");
+                    b.ToTable("Permission", "public");
                 });
 
             modelBuilder.Entity("Pharmacy_Management_System.Domain.Entities.Roles.Role", b =>

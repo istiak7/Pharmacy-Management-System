@@ -1,4 +1,5 @@
-﻿using Pharmacy_Management_System.Domain.Entities.Users;
+﻿using Pharmacy_Management_System.Domain.Entities.Permissions;
+using Pharmacy_Management_System.Domain.Entities.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace Pharmacy_Management_System.Domain.Entities.Roles
         public string Name { get; private set; }
         public string Description { get; private set; }
         public ICollection<User> Users { get; set; }
-
+        public ICollection<Permission> Permissions {  get; set; }
         private Role(string name, string description)
         {
             Name = name;

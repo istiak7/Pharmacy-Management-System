@@ -17,6 +17,7 @@ namespace Pharmacy_Management_System.Repo.Repositories.Roles
         private readonly ApplicationDbContextWrite _dbcontext;
         public RoleCommandRepository(ApplicationDbContextWrite context) : base(context)
         {
+            _dbcontext = context;
         }
     }
 }

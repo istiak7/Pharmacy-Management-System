@@ -10,7 +10,7 @@ namespace Pharmacy_Management_System.Controllers.Role
         #region Command
 
         [HttpPost("Create")]
-        public async Task<IActionResult> CreateRole([FromForm] RoleCreateDto model, CancellationToken cancellationToken)
+        public async Task<IActionResult> CreateRole([FromBody] RoleCreateDto model, CancellationToken cancellationToken)
         {
             Result result;
             var validationResult = new RoleCreateDtoValidator().Validate(model);
