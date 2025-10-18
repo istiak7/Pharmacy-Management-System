@@ -12,8 +12,8 @@ using Pharmacy_Management_System.Data.DbContexts;
 namespace Pharmacy_Management_System.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContextWrite))]
-    [Migration("20251014072418_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20251017143857_AddRelationshipBetweenUserRoles")]
+    partial class AddRelationshipBetweenUserRoles
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -101,6 +101,9 @@ namespace Pharmacy_Management_System.Data.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("refresh_token_expire_time");
 
+                    b.Property<int>("RoleId")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -115,7 +118,25 @@ namespace Pharmacy_Management_System.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("RoleId");
+
                     b.ToTable("Users", "public");
+                });
+
+            modelBuilder.Entity("Pharmacy_Management_System.Domain.Entities.Users.User", b =>
+                {
+                    b.HasOne("Pharmacy_Management_System.Domain.Entities.Roles.Role", "Role")
+                        .WithMany("Users")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("Pharmacy_Management_System.Domain.Entities.Roles.Role", b =>
+                {
+                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }

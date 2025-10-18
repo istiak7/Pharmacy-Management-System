@@ -115,6 +115,7 @@ namespace Pharmacy_Management_System.Service.Services.Users
         {
             var user = new User()
             {
+                RoleId = request.RoleId,
                 Email = request.Email,
                 Username = request.Username,
                 Password = request.Password

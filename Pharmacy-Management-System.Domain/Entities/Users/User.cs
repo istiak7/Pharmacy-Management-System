@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Pharmacy_Management_System.Domain.Entities.Roles;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -29,6 +30,11 @@ namespace Pharmacy_Management_System.Domain.Entities.Users
 
         [Column("refresh_token_expire_time"), MaxLength(512)]
         public DateTime? RefreshTokenExpireTime { get; set; }
+
+        [ForeignKey("RoleId")]
+        public int RoleId { get; set; } //FK
+        public Role Role { get; set; }
+
 
     }
 }
