@@ -20,9 +20,11 @@ namespace Pharmacy_Management_System.Service.Services.Roles
     {
         private readonly IRoleCommandRepository _roleCommandRepository;
         private readonly IPermissionCommandRepository _permissionCommandRepository;
-        public RoleCommandService(IRoleCommandRepository roleCommandRepository) 
+        public RoleCommandService(IRoleCommandRepository roleCommandRepository, IPermissionCommandRepository permissionCommandRepository) 
         {
             _roleCommandRepository = roleCommandRepository;
+            _permissionCommandRepository = permissionCommandRepository;
+
         }
         #region Command
         public async Task<Result> CreateRole(RoleCreateDto model, bool saveChnages = true)
@@ -34,13 +36,13 @@ namespace Pharmacy_Management_System.Service.Services.Roles
             
             var RoleDetails = Role.Create(model.Name, model.Description);
 
-            if (model.PermissionIds.Count > 0) 
+            if (model.PermissionIds is not null && model.PermissionIds.Count > 0) 
             {
                 var permissons = await _permissionCommandRepository.FindAllAsync(p =>  model.PermissionIds.Contains(p.Id));
 
-                foreach (var permissionId in permissons)
+                foreach (var permission in permissons)
                 {
-                    RoleDetails.Permissions.Add(permissionId);
+                    RoleDetails.Permissions.Add(permission);
                 }
             }
 
@@ -57,11 +59,17 @@ namespace Pharmacy_Management_System.Service.Services.Roles
             {
                 return Utility.GetNoDataFoundMsg(CommonMessages.NoDataFound);
             }
-            if(await  CheckIsNameExist(model.Name) is not null)
-            {
-                return Utility.GetAlreadyExistMsg(CommonMessages.DuplicateName);
-            }
+           
             existingData.Update(model.Name, model.Description);
+
+            existingData.Permissions.Clear();
+
+            var permissions = await _permissionCommandRepository.FindAllAsync(p => model.PermissionIds.Contains(p.Id));
+
+            foreach (var permission in permissions) 
+            { 
+                existingData.Permissions.Add(permission);
+            }
 
             await _roleCommandRepository.UpdateAsync(existingData, saveChnages);
 

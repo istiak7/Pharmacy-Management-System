@@ -11,7 +11,7 @@ namespace Pharmacy_Management_System.Domain.Entities.Permissions
     {
         public string Module {  get; private set; }
         public string Name { get; private set; }
-        public ICollection<Role> Roles { get; set; }
+        public ICollection<Role> Roles { get; private set; } = new List<Role>();
         public Permission(string module, string name)
         {
             Module = module;
