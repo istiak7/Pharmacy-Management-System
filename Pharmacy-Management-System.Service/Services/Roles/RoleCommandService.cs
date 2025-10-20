@@ -53,7 +53,8 @@ namespace Pharmacy_Management_System.Service.Services.Roles
 
         public async Task<Result> UpdateRole(RoleUpdateDto model, bool saveChnages = true)
         {
-            var existingData = await _roleCommandRepository.FindAsync(x => x.Id == model.Id && x.IsActive != (int)StatusId.Delete);
+            var existingData = await _roleCommandRepository.FindAsync(x => x.Id == model.Id && x.IsActive != (int)StatusId.Delete,
+                                                            includeProperties:r =>r.Permissions);
 
             if (existingData is null)
             {
