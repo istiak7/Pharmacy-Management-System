@@ -14,7 +14,7 @@ namespace Pharmacy_Management_System.Controllers.Users
             IUserService _userService
         ) : ControllerBase 
     {
-        #region GET
+        #region Query
 
         [AllowAnonymous]
         [HttpGet("refresh-token")]
@@ -27,6 +27,10 @@ namespace Pharmacy_Management_System.Controllers.Users
         }
 
         #endregion
+
+
+
+        #region Command
 
         #region LOGIN
 
@@ -61,6 +65,8 @@ namespace Pharmacy_Management_System.Controllers.Users
             var response = await _userService.Add(request);
             return Ok(response);
         }
+
+        #endregion
 
         #endregion
     }
