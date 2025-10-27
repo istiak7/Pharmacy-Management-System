@@ -76,18 +76,18 @@ namespace Pharmacy_Management_System.Service.Services.Roles
 
             var existingPermissionIds = existingRole.RolePermissions
                                                      .Where(x => x.IsActive == (int)StatusId.Active)
-                                                     .Select(x => x.PermissionId).ToList();
+                                                     .Select(x => x.PermissionId);
 
-            var toAdd = model.PermissionIds.Except(existingPermissionIds).ToList();
-            var toRemove = existingPermissionIds.Except(model.PermissionIds).ToList();
+            List<int> ? toAdd = model.PermissionIds.Except(existingPermissionIds).ToList();
+            List<int> ? toRemove = existingPermissionIds.Except(model.PermissionIds).ToList();
 
             var DeactivateData = _dbContext.RolePermissions
                                         .Where(x => toRemove.Contains(x.PermissionId));
                                         
-            foreach (var Dd in DeactivateData)
+            foreach (var data in DeactivateData)
             {
-                Dd.IsActive = (int)StatusId.Delete;
-                Dd.UpdatedAt = CommonMethods.GetBDCurrentTime();
+                data.IsActive = (int)StatusId.Delete;
+                data.UpdatedAt = CommonMethods.GetBDCurrentTime();
             }
 
             foreach(var newPermissionIdAdd  in toAdd)
@@ -102,9 +102,6 @@ namespace Pharmacy_Management_System.Service.Services.Roles
                 existingRole.RolePermissions.Add(newRolePermission);
             }
        
-
-           
-
             await _roleCommandRepository.UpdateAsync(existingRole, saveChnages);
 
             return Utility.GetSuccessMsg(CommonMessages.UpdatedSuccessfully);
