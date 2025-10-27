@@ -13,6 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Configurations\Brands\" />
+    <Folder Include="Configurations\Permissions\" />
     <Folder Include="DbContexts\" />
     <Folder Include="Migrations\" />
     <Folder Include="Setups\" />

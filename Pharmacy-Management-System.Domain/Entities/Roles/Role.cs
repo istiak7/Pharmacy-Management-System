@@ -13,7 +13,7 @@ namespace Pharmacy_Management_System.Domain.Entities.Roles
         public string Name { get; private set; }
         public string Description { get; private set; }
         public ICollection<User> Users { get; set; }
-        public ICollection<Permission> Permissions { get; private set; } = new List<Permission>();
+        public ICollection<RolePermission> RolePermissions { get; private set; } = new List<RolePermission>();
         private Role(string name, string description)
         {
             Name = name;

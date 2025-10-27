@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Pharmacy_Management_System.Data.DbContexts;
@@ -11,9 +12,11 @@ using Pharmacy_Management_System.Data.DbContexts;
 namespace Pharmacy_Management_System.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContextWrite))]
-    partial class ApplicationDbContextWriteModelSnapshot : ModelSnapshot
+    [Migration("20251027060716_UpdateRolePermssion")]
+    partial class UpdateRolePermssion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -128,8 +131,7 @@ namespace Pharmacy_Management_System.Data.Migrations
 
                     b.HasIndex("PermissionId");
 
-                    b.HasIndex("RoleId", "PermissionId")
-                        .IsUnique();
+                    b.HasIndex("RoleId");
 
                     b.ToTable("RolePermissions", "public");
                 });
@@ -198,13 +200,13 @@ namespace Pharmacy_Management_System.Data.Migrations
             modelBuilder.Entity("Pharmacy_Management_System.Domain.Entities.Roles.RolePermission", b =>
                 {
                     b.HasOne("Pharmacy_Management_System.Domain.Entities.Permissions.Permission", "Permission")
-                        .WithMany("RolePermissions")
+                        .WithMany("Roles")
                         .HasForeignKey("PermissionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Pharmacy_Management_System.Domain.Entities.Roles.Role", "Role")
-                        .WithMany("RolePermissions")
+                        .WithMany("Permissions")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -227,12 +229,12 @@ namespace Pharmacy_Management_System.Data.Migrations
 
             modelBuilder.Entity("Pharmacy_Management_System.Domain.Entities.Permissions.Permission", b =>
                 {
-                    b.Navigation("RolePermissions");
+                    b.Navigation("Roles");
                 });
 
             modelBuilder.Entity("Pharmacy_Management_System.Domain.Entities.Roles.Role", b =>
                 {
-                    b.Navigation("RolePermissions");
+                    b.Navigation("Permissions");
 
                     b.Navigation("Users");
                 });
