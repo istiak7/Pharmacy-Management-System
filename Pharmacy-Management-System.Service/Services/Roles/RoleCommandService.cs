@@ -15,6 +15,7 @@ using Utility = Pharmacy_Management_System.Application.Common.Utilities.Utility;
 using Pharmacy_Management_System.Application.RepositoryInterfaces.Permissions;
 using Pharmacy_Management_System.Domain.Contexts;
 using Pharmacy_Management_System.Data.DbContexts;
+using Pharmacy_Management_System.Application.RepositoryInterfaces.RolesPermissions;
 
 namespace Pharmacy_Management_System.Service.Services.Roles
 {
@@ -22,12 +23,14 @@ namespace Pharmacy_Management_System.Service.Services.Roles
     {
         private readonly IRoleCommandRepository _roleCommandRepository;
         private readonly IPermissionCommandRepository _permissionCommandRepository;
+        private readonly IRolePermissionCommandRepository _rolePermissionCommandRepository;
         private readonly ApplicationDbContextWrite _dbContext;
         public RoleCommandService(IRoleCommandRepository roleCommandRepository, IPermissionCommandRepository permissionCommandRepository,
-                                       ApplicationDbContextWrite dbContext) 
+                                       IRolePermissionCommandRepository rolePermissionCommandRepository,ApplicationDbContextWrite dbContext) 
         {
             _roleCommandRepository = roleCommandRepository;
             _permissionCommandRepository = permissionCommandRepository;
+            _rolePermissionCommandRepository = rolePermissionCommandRepository;
             _dbContext = dbContext;
 
         }
@@ -63,6 +66,7 @@ namespace Pharmacy_Management_System.Service.Services.Roles
 
         public async Task<Result> UpdateRole(RoleUpdateDto model, bool saveChnages = true)
         {
+
             var existingRole = await _roleCommandRepository
                                                      .FindAsync(x => x.Id == model.Id && x.IsActive != (int)StatusId.Delete,
                                                       includeProperties:r =>r.RolePermissions);
@@ -75,33 +79,42 @@ namespace Pharmacy_Management_System.Service.Services.Roles
             existingRole.Update(model.Name, model.Description);
 
             var existingPermissionIds = existingRole.RolePermissions
-                                                     .Where(x => x.IsActive == (int)StatusId.Active)
-                                                     .Select(x => x.PermissionId);
+                                                    .Select(x => x.PermissionId);
 
-            List<int> ? toAdd = model.PermissionIds.Except(existingPermissionIds).ToList();
             List<int> ? toRemove = existingPermissionIds.Except(model.PermissionIds).ToList();
 
-            var DeactivateData = _dbContext.RolePermissions
-                                        .Where(x => toRemove.Contains(x.PermissionId));
-                                        
-            foreach (var data in DeactivateData)
+            var deactivatedPermission = await _rolePermissionCommandRepository.FindAllAsync(x => toRemove.Contains(x.PermissionId) && x.RoleId == model.Id);
+
+            foreach (var permission in deactivatedPermission)
             {
-                data.IsActive = (int)StatusId.Delete;
-                data.UpdatedAt = CommonMethods.GetBDCurrentTime();
+                permission.IsActive = (int)StatusId.Delete;
+                permission.UpdatedAt = CommonMethods.GetBDCurrentTime();
             }
 
-            foreach(var newPermissionIdAdd  in toAdd)
+            var activatedPermission = await _rolePermissionCommandRepository.FindAllAsync(x => model.PermissionIds.Contains(x.PermissionId) && x.RoleId == model.Id);
+
+            foreach (var permission in activatedPermission)
             {
-                var newRolePermission = new RolePermission
-                {
-                    RoleId = newPermissionIdAdd,
-                    PermissionId = newPermissionIdAdd,
-                    IsActive = (int)StatusId.Active,
-                    UpdatedAt = CommonMethods.GetBDCurrentTime()
-                };
-                existingRole.RolePermissions.Add(newRolePermission);
+                permission.IsActive = (int)StatusId.Active;
+                permission.UpdatedAt= CommonMethods.GetBDCurrentTime();
             }
-       
+
+            List<int> ? toAdd = model.PermissionIds.Except(existingPermissionIds).ToList();
+
+            if(toAdd is not null)
+            {
+                foreach (var newPermissionId in toAdd)
+                {
+                    var newRolePermission = new RolePermission
+                    {
+                        RoleId = model.Id,
+                        PermissionId = newPermissionId,
+                        IsActive = (int)StatusId.Active,
+                    };
+                    existingRole.RolePermissions.Add(newRolePermission);
+                }
+            }
+           
             await _roleCommandRepository.UpdateAsync(existingRole, saveChnages);
 
             return Utility.GetSuccessMsg(CommonMessages.UpdatedSuccessfully);
