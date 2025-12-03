@@ -11,7 +11,6 @@ namespace Pharmacy_Management_System.Domain.Entities.Roles
     {
         public int RoleId { get; set; } // Fk
         public Role Role { get; set; } // NavigationProperty
-
         public int PermissionId { get; set; } // FK
         public Permission Permission { get; set; } //NavigationProperty
 
