@@ -25,6 +25,7 @@ namespace Pharmacy_Management_System.DependencyExtensions
             services.AddValidatorsFromAssemblyContaining<UserRequestValidator>();
             services.AddValidatorsFromAssemblyContaining<LoginRequest>();
             services.AddScoped<IEmailCommandService, EmailCommandService>();
+            services.AddScoped<IOtpVerificationCommandService, OtpVerificationCommandService>();
         }
     }
 }
