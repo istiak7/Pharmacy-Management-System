@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <Folder Include="Enums\" />
+    <Folder Include="Features\Email\Query\" />
     <Folder Include="Features\Permissions\Query\" />
     <Folder Include="Features\Roles\Queries\Dtos\" />
     <Folder Include="Features\Test\Command\" />
@@ -24,7 +25,7 @@
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
     <PackageReference Include="FluentValidation" Version="12.0.0" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.0.0" />
-    <PackageReference Include="MediatR" Version="13.0.0" />
+    <PackageReference Include="MediatR" Version="14.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="3.1.32" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.8">

@@ -1,7 +1,14 @@
 ﻿using FluentValidation;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Pharmacy_Management_System.Application.Common.Utilities;
 using Pharmacy_Management_System.Application.Dtos.Requests.Users;
+using Pharmacy_Management_System.Application.Features.Email.Command;
+using Pharmacy_Management_System.Application.Features.Email.Command.Dtos;
+using Pharmacy_Management_System.Application.Features.Roles.Commands;
+using Pharmacy_Management_System.Application.Features.Roles.Commands.Dtos;
+using Pharmacy_Management_System.Application.ServiceInterfaces.Email;
 using Pharmacy_Management_System.Application.Services.Users;
 using Pharmacy_Management_System.Service.Validators;
 
@@ -11,7 +18,9 @@ namespace Pharmacy_Management_System.Controllers.Users
     [ApiController]
     [Route("api/[controller]")]
     public class UserController (
-            IUserService _userService
+            IUserService _userService,
+            IEmailCommandService _emailCommandService,
+            IMediator _mediator
         ) : ControllerBase 
     {
         #region Query
@@ -69,5 +78,30 @@ namespace Pharmacy_Management_System.Controllers.Users
         #endregion
 
         #endregion
+
+
+        #region SendOtp
+
+        [HttpPost("send-otp")]
+        [AllowAnonymous]
+        public async Task<IActionResult> SendOtp([FromBody] SendOtpRequest model, CancellationToken cancellationToken)
+        {
+            Result result;
+            //var validationResult = new RoleCreateDtoValidator().Validate(model);
+            //if (!validationResult.IsValid)
+            //{
+            //    result = Utility.GetValidationFailedMsg(FluentValidationHelper.GetErrorMessage(validationResult.Errors));
+            //}
+            //else
+            //{
+                var Command = new SendEmailCommand(model);
+                result = await _mediator.Send(Command, cancellationToken);
+            //}
+            return StatusCode(result.StatusCode, result);
+
+        }
+
+        #endregion
+
     }
 }

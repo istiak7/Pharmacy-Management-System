@@ -1,9 +1,11 @@
 ﻿using FluentValidation;
 using Pharmacy_Management_System.Application.Dtos.Requests.Users;
+using Pharmacy_Management_System.Application.ServiceInterfaces.Email;
 using Pharmacy_Management_System.Application.ServiceInterfaces.Permissions;
 using Pharmacy_Management_System.Application.ServiceInterfaces.Roles;
 using Pharmacy_Management_System.Application.ServiceInterfaces.Tests;
 using Pharmacy_Management_System.Application.Services.Users;
+using Pharmacy_Management_System.Service.Services.Email;
 using Pharmacy_Management_System.Service.Services.Permissions;
 using Pharmacy_Management_System.Service.Services.Roles;
 using Pharmacy_Management_System.Service.Services.Tests;
@@ -22,6 +24,7 @@ namespace Pharmacy_Management_System.DependencyExtensions
             services.AddScoped<ITestApiQueryService, TestApiQueryService>();
             services.AddValidatorsFromAssemblyContaining<UserRequestValidator>();
             services.AddValidatorsFromAssemblyContaining<LoginRequest>();
+            services.AddScoped<IEmailCommandService, EmailCommandService>();
         }
     }
 }

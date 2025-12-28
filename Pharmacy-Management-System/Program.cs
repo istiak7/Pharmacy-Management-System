@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.ResponseCompression;
 using Pharmacy_Management_System.Application;
 using Pharmacy_Management_System.Application.Common.Utilities;
+using Pharmacy_Management_System.Application.Features.Email.Command.Dtos;
 using Pharmacy_Management_System.Data.Setups;
 using Pharmacy_Management_System.DependencyExtensions;
 using Pharmacy_Management_System.Mappers;
@@ -31,6 +32,19 @@ builder.Services.Configure<GzipCompressionProviderOptions>(options =>
 {
     options.Level = CompressionLevel.Fastest;
 });
+
+builder.Services.Configure<SmtpSettings>(
+    builder.Configuration.GetSection("SmtpSettings"));
+
+#region Redis Cache Configuration
+
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = builder.Configuration.GetValue<string>("Redis:ConnectionString");
+    options.InstanceName = builder.Configuration.GetValue<string>("Redis:InstanceName");
+});
+
+#endregion
 
 #region Initialize CommonMethods
 
