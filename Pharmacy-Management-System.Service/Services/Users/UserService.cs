@@ -1,4 +1,5 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.IdentityModel.Tokens;
 using Pharmacy_Management_System.Application.AppSettings;
 using Pharmacy_Management_System.Application.Dtos.Requests.Users;
 using Pharmacy_Management_System.Application.Dtos.Responses.Users;
@@ -13,7 +14,8 @@ namespace Pharmacy_Management_System.Service.Services.Users
 {
     public class UserService(
             JWTSettings _jwtSettings,
-            IUserRepository _userRepository 
+            IUserRepository _userRepository,
+            IDistributedCache _distributedCache
         ) : IUserService
     {
         #region PRIVATE
@@ -113,6 +115,12 @@ namespace Pharmacy_Management_System.Service.Services.Users
 
         public async Task<UserResponse> Add(UserRequest request)
         {
+            var verifiedKey = $"verified_email:{request.Email}";
+            var isVerified  = await _distributedCache.GetStringAsync(verifiedKey);
+            if(isVerified != "true")
+            {
+                throw new Exception("Email not verified");
+            }
             var user = new User()
             {
                 RoleId = request.RoleId,
@@ -120,7 +128,7 @@ namespace Pharmacy_Management_System.Service.Services.Users
                 Username = request.Username,
                 Password = request.Password
             };
-
+            await _distributedCache.RemoveAsync(verifiedKey);
             await _userRepository.AddAsync(user);
             await _userRepository.CompleteAsync();
 

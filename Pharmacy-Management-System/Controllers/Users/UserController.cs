@@ -37,7 +37,6 @@ namespace Pharmacy_Management_System.Controllers.Users
         #endregion
 
 
-
         #region Command
 
         #region LOGIN
