@@ -57,7 +57,8 @@ namespace Pharmacy_Management_System.Service.Services.Email
                 message.Subject = "Your Verification Code";
                 message.Body = new TextPart("html")
                 {
-                    Text = $@"<h3>Your Code: {otp}</h3>"
+                    Text = $@"<h3>Your Code: {otp}</h3>
+                            The otp is valid for 5 miniutes."
                 };
 
                 using var client = new SmtpClient();
@@ -82,6 +83,36 @@ namespace Pharmacy_Management_System.Service.Services.Email
 
                 return Utility.GetErrorMsg($"Failed to send email. Error: {ex.Message}");
             }
+        }
+
+        public async Task<Result> OtpVerificationAsync(VerifyOtpRequestDto request)
+        {
+            var otpKey = $"otp:{request.Email}";
+
+            //Get the OTP from Redis
+            var storeOtp = _distributedCache.GetString(otpKey);
+            _logger.LogInformation($"Store Otp is :{storeOtp}");
+            if (string.IsNullOrEmpty(storeOtp))
+            {
+                return Utility.GetErrorMsg("OTP has expired or does not exist.");
+            }
+            else if (storeOtp != request.Otp)
+            {
+                return Utility.GetErrorMsg("Invalid OTP.");
+            }
+            var verifiedEmailKey = $"verified_email:{request.Email}";
+            var options = new DistributedCacheEntryOptions
+            {
+                AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(20) // Set expiration time for verified email
+            };
+
+            // Mark email as verified in Redis
+            await _distributedCache.SetStringAsync(verifiedEmailKey, "true", options);
+
+            // Remove OTP after successful verification
+            await _distributedCache.RemoveAsync(otpKey);
+
+            return Utility.GetSuccessMsg("OTP verified successfully.");
         }
     }
 }

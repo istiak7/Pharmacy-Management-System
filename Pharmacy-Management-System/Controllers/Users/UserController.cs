@@ -19,8 +19,6 @@ namespace Pharmacy_Management_System.Controllers.Users
     [Route("api/[controller]")]
     public class UserController (
             IUserService _userService,
-            IOtpVerificationCommandService _otpVerificationCommandService,
-            IEmailCommandService _emailCommandService,
             IMediator _mediator
         ) : ControllerBase 
     {
@@ -88,16 +86,16 @@ namespace Pharmacy_Management_System.Controllers.Users
         public async Task<IActionResult> SendOtp([FromBody] SendOtpRequest model, CancellationToken cancellationToken)
         {
             Result result;
-            //var validationResult = new RoleCreateDtoValidator().Validate(model);
-            //if (!validationResult.IsValid)
-            //{
-            //    result = Utility.GetValidationFailedMsg(FluentValidationHelper.GetErrorMessage(validationResult.Errors));
-            //}
-            //else
-            //{
+            var validationResult = new EmailValidatorDto().Validate(model);
+            if(!validationResult.IsValid)
+            {
+                result = Utility.GetValidationFailedMsg(FluentValidationHelper.GetErrorMessage(validationResult.Errors));
+            }
+            else
+            {
                 var Command = new SendEmailCommand(model);
                 result = await _mediator.Send(Command, cancellationToken);
-            //}
+            }
             return StatusCode(result.StatusCode, result);
 
         }
@@ -105,11 +103,20 @@ namespace Pharmacy_Management_System.Controllers.Users
         [AllowAnonymous]
         public async Task<IActionResult> VerifyOtp([FromBody] VerifyOtpRequestDto model,CancellationToken cancellationToken)
         {
-            var Command = new OtpVerificationCommand(model);
-            var response = await _mediator.Send(Command, cancellationToken);
-            return Ok(response);
+            Result result;
+            var validationResult = new VerifyOtpRequestValidatorDto().Validate(model);
+            if(!validationResult.IsValid)
+            {
+                result = Utility.GetValidationFailedMsg(FluentValidationHelper.GetErrorMessage(validationResult.Errors));
+               
+            }
+            else
+            {
+                var Command = new OtpVerificationCommand(model);
+                result = await _mediator.Send(Command, cancellationToken);
+            }
+            return StatusCode(result.StatusCode, result);
         }
         #endregion
-
     }
 }
