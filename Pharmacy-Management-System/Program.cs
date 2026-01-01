@@ -36,6 +36,18 @@ builder.Services.Configure<GzipCompressionProviderOptions>(options =>
 builder.Services.Configure<SmtpSettings>(
     builder.Configuration.GetSection("SmtpSettings"));
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", builder =>
+    {
+        builder
+            .WithOrigins("http://localhost:4200") // Angular app URL
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
+
 #region Redis Cache Configuration
 
 builder.Services.AddStackExchangeRedisCache(options =>
@@ -88,7 +100,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.UseCustomMiddleware();
 app.MapControllers();
-
+app.UseCors("AllowFrontend");
 app.Run();
 
 #endregion
